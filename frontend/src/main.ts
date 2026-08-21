@@ -15,18 +15,30 @@ async function bootstrap() {
       onUnhandledRequest: 'bypass',
     })
   }
+// hapus
+  const app = createApp(App)
+
+  app.use(createPinia())
+  app.use(router)
+  app.use(PrimeVue, {
+    theme: {
+      preset: Aura,
+    },
+  })
+
+  app.mount('#app')
 }
 
-const app = createApp(App)
+// const app = createApp(App)
 
-app.use(createPinia())
-app.use(router)
-app.use(PrimeVue, {
-  theme: {
-    preset: Aura,
-  },
-})
+// app.use(createPinia())
+// app.use(router)
+// app.use(PrimeVue, {
+//   theme: {
+//     preset: Aura,
+//   },
+// })
 
-app.mount('#app')
+// app.mount('#app')
 
 void bootstrap()

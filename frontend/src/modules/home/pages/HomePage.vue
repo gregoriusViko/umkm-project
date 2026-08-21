@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useProducts } from '../composables/useProducts'
+import type { Product, ProductsRequest } from '../types/product'
+
 const categories = [
   { name: 'Makanan', icon: '🍜', color: '#fff2db' },
   { name: 'Fashion', icon: '👕', color: '#e8f4ff' },
@@ -8,56 +12,47 @@ const categories = [
   { name: 'Lainnya', icon: '✨', color: '#e8f7ef' },
 ]
 
-const products = [
-  {
-    name: 'Sepatu Sneakers Kanvas Lokal',
-    price: 'Rp189.000',
-    oldPrice: 'Rp235.000',
-    discount: '20%',
-    shop: 'Langkah Lokal',
-    city: 'Bandung',
-    rating: '4.9',
-    sold: '1,2 rb terjual',
-    image:
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=640&q=82',
-  },
-  {
-    name: 'Tas Anyaman Rotan Handmade',
-    price: 'Rp145.000',
-    oldPrice: '',
-    discount: '',
-    shop: 'Kriya Nusantara',
-    city: 'Bantul',
-    rating: '4.8',
-    sold: '864 terjual',
-    image:
-      'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=640&q=82',
-  },
-  {
-    name: 'Kopi Arabika Gayo 250 gram',
-    price: 'Rp68.000',
-    oldPrice: 'Rp80.000',
-    discount: '15%',
-    shop: 'Ruang Seduh',
-    city: 'Aceh Tengah',
-    rating: '4.9',
-    sold: '2,4 rb terjual',
-    image:
-      'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=640&q=82',
-  },
-  {
-    name: 'Jam Tangan Kayu Pria Wanita',
-    price: 'Rp219.000',
-    oldPrice: '',
-    discount: '',
-    shop: 'KayuKita Studio',
-    city: 'Yogyakarta',
-    rating: '4.7',
-    sold: '532 terjual',
-    image:
-      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=640&q=82',
-  },
-]
+const {getProducts, loading, error } = useProducts()
+
+const pages: ProductsRequest = {
+  limit: 20,
+  after: null,
+}
+
+const products = ref<Product[]>([])
+
+const currencyFormatter = new Intl.NumberFormat('id-ID', {
+  style: 'currency',
+  currency: 'IDR',
+  maximumFractionDigits: 0,
+})
+
+const ratingFormatter = new Intl.NumberFormat('id-ID', {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+})
+
+const soldFormatter = new Intl.NumberFormat('id-ID', {
+  notation: 'compact',
+  maximumFractionDigits: 1,
+})
+
+const formatCurrency = (value: number) => currencyFormatter.format(value)
+const formatRating = (value: number) => ratingFormatter.format(value)
+const formatSold = (value: number) => `${soldFormatter.format(value)} terjual`
+
+onMounted(async () => {
+  loading.value = true
+  try {
+    const response = await getProducts(pages) // Ganti dengan fungsi API Anda
+    products.value = response?.products || []
+  } catch (error) {
+    console.error("Gagal mengambil data", error)
+  } finally {
+    loading.value = false
+  }
+})
+
 </script>
 
 <template>
@@ -127,7 +122,9 @@ const products = [
         <article v-for="product in products" :key="product.name" class="product-card">
           <div class="product-image-wrap">
             <img :src="product.image" :alt="product.name" />
-            <span v-if="product.discount" class="discount-badge">-{{ product.discount }}</span>
+            <span v-if="product.discount > 0" class="discount-badge"
+              >-{{ product.discount }}%</span
+            >
             <button type="button" class="favorite-button" :aria-label="`Simpan ${product.name}`">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path
@@ -139,15 +136,15 @@ const products = [
           <div class="product-details">
             <span class="shop-name">{{ product.shop }}</span>
             <h3>{{ product.name }}</h3>
-            <strong class="product-price">{{ product.price }}</strong>
-            <div v-if="product.oldPrice" class="old-price-row">
-              <del>{{ product.oldPrice }}</del>
-              <span>Hemat {{ product.discount }}</span>
+            <strong class="product-price">{{ formatCurrency(product.price) }}</strong>
+            <div v-if="product.oldPrices > 0" class="old-price-row">
+              <del>{{ formatCurrency(product.oldPrices) }}</del>
+              <span>Hemat {{ product.discount }}%</span>
             </div>
             <div class="product-meta">
-              <span class="rating">★ {{ product.rating }}</span>
+              <span class="rating">★ {{ formatRating(product.rating) }}</span>
               <span>·</span>
-              <span>{{ product.sold }}</span>
+              <span>{{ formatSold(product.sold) }}</span>
             </div>
             <span class="product-city">{{ product.city }}</span>
           </div>
