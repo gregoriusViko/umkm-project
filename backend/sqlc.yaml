@@ -1,0 +1,12 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    # sqlc akan membaca file-file SQL dari folder ini:
+    queries: "internal/identity/repository/sql/query.sql"
+    schema: "internal/identity/repository/sql/schema.sql"
+
+    # sqlc akan membuang hasil generate kode Go ke folder ini:
+    gen:
+      go:
+        package: "db"
+        out: "internal/identity/repository/db"
