@@ -1,0 +1,28 @@
+Auth
+- Login
+- Register
+
+Products
+- Menampilkan daftar Product
+- Menampilkan deskripsi product
+
+Cart
+- CRUD item
+
+Orders
+- Checkout
+- Payment gateway
+- status pengiriman
+- Riwayat
+- retur
+
+User
+- Melihat profil
+- Mengedit profil
+
+Search
+- Mencari product
+- Menentukan filter
+
+Categories
+- Melihat daftar kategori

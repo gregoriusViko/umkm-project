@@ -3,6 +3,8 @@ import { onMounted, ref } from 'vue'
 import { useProducts } from '../composables/useProducts'
 import type { Product, ProductsRequest } from '../types/product'
 
+import ProductCard from '../components/ProductCard.vue'
+
 const categories = [
   { name: 'Makanan', icon: '🍜', color: '#fff2db' },
   { name: 'Fashion', icon: '👕', color: '#e8f4ff' },
@@ -120,34 +122,7 @@ onMounted(async () => {
 
       <div class="product-grid">
         <article v-for="product in products" :key="product.name" class="product-card">
-          <div class="product-image-wrap">
-            <img :src="product.image" :alt="product.name" />
-            <span v-if="product.discount > 0" class="discount-badge"
-              >-{{ product.discount }}%</span
-            >
-            <button type="button" class="favorite-button" :aria-label="`Simpan ${product.name}`">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"
-                />
-              </svg>
-            </button>
-          </div>
-          <div class="product-details">
-            <span class="shop-name">{{ product.shop }}</span>
-            <h3>{{ product.name }}</h3>
-            <strong class="product-price">{{ formatCurrency(product.price) }}</strong>
-            <div v-if="product.oldPrices > 0" class="old-price-row">
-              <del>{{ formatCurrency(product.oldPrices) }}</del>
-              <span>Hemat {{ product.discount }}%</span>
-            </div>
-            <div class="product-meta">
-              <span class="rating">★ {{ formatRating(product.rating) }}</span>
-              <span>·</span>
-              <span>{{ formatSold(product.sold) }}</span>
-            </div>
-            <span class="product-city">{{ product.city }}</span>
-          </div>
+          <ProductCard v-bind="product"/>
         </article>
       </div>
     </section>

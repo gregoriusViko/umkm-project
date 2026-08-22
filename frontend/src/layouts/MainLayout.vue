@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/modules/auth/stores/authStore'
+
+const router = useRouter()
+const authStore = useAuthStore()
 
 const activeNavigation = ref('Beranda')
 
@@ -15,6 +20,7 @@ async function handleLogout() {
   authStore.logout()
   await router.replace('/login')
 }
+
 </script>
 
 <template>
@@ -73,7 +79,7 @@ async function handleLogout() {
         class="nav-item"
         :class="{ active: activeNavigation === item.label }"
         type="button"
-        @click="activeNavigation = item.label"
+        @click="handleLogout"
       >
         <span class="nav-icon">
           <svg v-if="item.icon === 'home'" viewBox="0 0 24 24">
