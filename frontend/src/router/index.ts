@@ -37,6 +37,11 @@ const router = createRouter({
           name: 'search',
           component: () => import('@/modules/products/pages/SearchPage.vue'),
         },
+        {
+          path: '/coba',
+          name: 'coba',
+          component: () => import('@/modules/products/pages/CobaPage.vue'),
+        },
       ],
     },
   ],
