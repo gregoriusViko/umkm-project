@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainLayout from '@/layouts/MainLayout.vue'
+import MainLayout from '@/layouts/CobaLayout.vue'
 import { useAuthStore } from '@/modules/auth/stores/authStore'
 
 const router = createRouter({

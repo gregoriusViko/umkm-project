@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import Avatar from 'primevue/avatar'
-import Badge from 'primevue/badge'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Menu from 'primevue/menu'
-import Menubar from 'primevue/menubar'
+import {InputGroup, Avatar, Badge, Button, InputText, Menu, Menubar } from 'primevue'
 import { useAuthStore } from '@/modules/auth/stores/authStore'
 
 const route = useRoute()
@@ -79,28 +74,28 @@ async function handleLogout() {
 </script>
 
 <template>
-  <div class="marketplace-shell">
-    <header class="app-header">
+  <div class="w-full min-h-screen bg-white">
+    <header class="sticky top-0 z-50 flex items-center justify-between">
       <div class="header-primary">
         <RouterLink class="brand" to="/" aria-label="Beranda PasarKita">
           <span class="brand-mark">PK</span>
           <span><strong>PasarKita</strong><small>Bangga buatan Indonesia</small></span>
         </RouterLink>
 
-        <Button class="location-button" text type="button" aria-label="Pilih lokasi pengiriman">
-          <span class="location-pin" aria-hidden="true">⌖</span>
-          <span class="location-copy"><small>Dikirim ke</small><strong>Jakarta Selatan</strong></span>
-          <span class="location-chevron" aria-hidden="true">⌄</span>
-        </Button>
-
         <form class="search-box" role="search" @submit.prevent="submitSearch">
-          <span class="search-symbol" aria-hidden="true">⌕</span>
-          <InputText
-            v-model="searchQuery"
-            type="search"
-            placeholder="Cari produk atau toko UMKM..."
-          />
-          <Button class="search-submit" type="submit" label="Cari" />
+          <InputGroup>
+            <InputText v-model="searchQuery" type="search" placeholder="Cari produk atau toko UMKM..." />
+            <!-- Kelas warna dan interaksi ditarik ke elemen pembungkus (Button) -->
+            <Button class="search-submit text-gray-500 hover:text-blue-500 p-2 transition-colors" type="submit"
+              label="Cari">
+              <!-- aria-hidden mencegah pembacaan ganda. Ukuran w-6 h-6 tetap dipertahankan -->
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </Button>
+          </InputGroup>
         </form>
 
         <div class="header-actions">
@@ -130,15 +125,8 @@ async function handleLogout() {
     </main>
 
     <nav class="bottom-navigation" aria-label="Navigasi utama">
-      <Button
-        v-for="item in navigationItems"
-        :key="item.label"
-        class="nav-item"
-        :class="{ active: activeNavigation === item.label }"
-        text
-        type="button"
-        @click="navigateTo(item, $event)"
-      >
+      <Button v-for="item in navigationItems" :key="item.label" class="nav-item"
+        :class="{ active: activeNavigation === item.label }" text type="button" @click="navigateTo(item, $event)">
         <span class="nav-icon">
           <span aria-hidden="true">{{ item.symbol }}</span>
           <Badge v-if="item.badge" :value="item.badge" severity="danger" />

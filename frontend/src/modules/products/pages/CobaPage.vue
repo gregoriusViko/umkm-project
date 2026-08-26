@@ -15,11 +15,19 @@ const onSearch = () => {
 </script>
 
 <template>
-  <div class="card flex justify-content-center">
-    <!-- InputGroup menyatukan InputText dan Button -->
-    <InputGroup>
-      <InputText v-model="keyword" placeholder="Cari produk (mis. Sepatu)..." @keyup.enter="onSearch" />
-      <Button icon="pi pi-search" label="Cari" @click="onSearch" />
-    </InputGroup>
-  </div>
+  <header class="sticky top-0 z-50 flex items-center justify-between bg-white px-4 py-3 shadow-sm">
+
+    <!-- Bagian Kiri: Logo atau Tombol Menu -->
+    <div class="flex items-center gap-3">
+      <button class="text-gray-600">☰</button> <!-- Ikon Menu Hamburger -->
+      <div class="font-bold text-lg">LogoApp</div>
+    </div>
+
+    <!-- Bagian Kanan: Aksi (Search & Profil) -->
+    <div class="flex items-center gap-4">
+      <button class="text-gray-600">🔍</button> <!-- Ikon Search -->
+      <div class="h-8 w-8 rounded-full bg-gray-300"></div> <!-- Avatar Profil -->
+    </div>
+
+  </header>
 </template>
