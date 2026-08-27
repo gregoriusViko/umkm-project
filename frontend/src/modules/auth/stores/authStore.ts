@@ -5,6 +5,7 @@ import type { User } from '../types/auth'
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const accessToken = ref<string | null>(localStorage.getItem('access_token'))
+  const expired = ref<string | null>(localStorage.getItem('exp'))
 
   const isAuthenticated = computed(() => {
     return accessToken.value !== null

@@ -17,7 +17,7 @@ export const handlers = [
     }
 
     return HttpResponse.json({
-      accessToken: 'dummy-access-token',
+      accessToken: user.email,
       user: {
         id: user.id,
         name: user.name,
