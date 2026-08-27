@@ -1,140 +1,64 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import {InputGroup, Avatar, Badge, Button, InputText, Menu, Menubar } from 'primevue'
-import { useAuthStore } from '@/modules/auth/stores/authStore'
+import { AutoComplete, Button, InputGroup, Badge } from 'primevue'
+import { Icon } from '@iconify/vue'
 
-const route = useRoute()
-const router = useRouter()
-const authStore = useAuthStore()
-const searchQuery = ref(String(route.query.q ?? ''))
-const selectedNavigation = ref('Beranda')
-const accountMenu = ref<InstanceType<typeof Menu> | null>(null)
-
-const navigationItems = [
-  { label: 'Beranda', symbol: '⌂', route: '/' },
-  { label: 'Kategori', symbol: '▦', hash: '#categories' },
-  { label: 'Keranjang', symbol: '♧', badge: 2 },
-  { label: 'Pesanan', symbol: '▤' },
-  { label: 'Akun', symbol: '○', account: true },
-]
-
-const desktopMenuItems = [
-  { label: 'Beranda', command: () => navigateTo({ label: 'Beranda', route: '/' }) },
-  { label: 'Kategori', command: () => navigateTo({ label: 'Kategori', hash: '#categories' }) },
-  { label: 'Promo hari ini', command: () => navigateTo({ label: 'Promo', hash: '#promo' }) },
-  { label: 'Produk pilihan', command: () => navigateTo({ label: 'Produk', hash: '#products' }) },
-]
-
-const accountItems = [
-  { label: 'Profil saya', disabled: true },
-  { separator: true },
-  { label: 'Keluar', command: handleLogout },
-]
-
-const activeNavigation = computed(() => {
-  if (route.name === 'search') return 'Kategori'
-  return selectedNavigation.value
-})
-
-async function navigateTo(
-  item: (typeof navigationItems)[number] | { label: string; route?: string; hash?: string },
-  event?: Event,
-) {
-  selectedNavigation.value = item.label
-
-  if ('account' in item && item.account && event) {
-    accountMenu.value?.toggle(event)
-    return
-  }
-
-  if (item.route) {
-    await router.push(item.route)
-    return
-  }
-
-  if (item.hash) {
-    await router.push({ name: 'Home', hash: item.hash })
-  }
-}
-
-async function submitSearch() {
-  const query = searchQuery.value.trim()
-  await router.push({ name: 'search', query: query ? { q: query } : {} })
-}
-
-function toggleAccountMenu(event: Event) {
-  accountMenu.value?.toggle(event)
-}
-
-async function handleLogout() {
-  authStore.logout()
-  await router.replace('/login')
-}
 </script>
 
 <template>
-  <div class="w-full min-h-screen bg-white">
-    <header class="sticky top-0 z-50 flex items-center justify-between">
-      <div class="header-primary">
-        <RouterLink class="brand" to="/" aria-label="Beranda PasarKita">
-          <span class="brand-mark">PK</span>
-          <span><strong>PasarKita</strong><small>Bangga buatan Indonesia</small></span>
-        </RouterLink>
-
-        <form class="search-box" role="search" @submit.prevent="submitSearch">
-          <InputGroup>
-            <InputText v-model="searchQuery" type="search" placeholder="Cari produk atau toko UMKM..." />
-            <!-- Kelas warna dan interaksi ditarik ke elemen pembungkus (Button) -->
-            <Button class="search-submit text-gray-500 hover:text-blue-500 p-2 transition-colors" type="submit"
-              label="Cari">
-              <!-- aria-hidden mencegah pembacaan ganda. Ukuran w-6 h-6 tetap dipertahankan -->
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
-            </Button>
-          </InputGroup>
-        </form>
-
-        <div class="header-actions">
-          <Button class="header-icon-button" text rounded type="button" aria-label="Notifikasi">
-            <span aria-hidden="true">♢</span>
-            <i class="notification-dot"></i>
-          </Button>
-          <Button class="account-button" text type="button" @click="toggleAccountMenu">
-            <Avatar label="V" shape="circle" />
-            <span class="account-copy"><small>Selamat datang</small><strong>Akun saya</strong></span>
-            <span aria-hidden="true">⌄</span>
-          </Button>
-        </div>
-      </div>
-
-      <div class="desktop-navigation">
-        <Menubar :model="desktopMenuItems">
-          <template #end>
-            <span class="desktop-trust">Gratis ongkir untuk produk bertanda Lokal Pilihan</span>
-          </template>
-        </Menubar>
+  <div class="w-full h-screen flex flex-col bg-white overflow-hidden">
+    <header class="z-50 flex items-center justify-between gap-6 px-4 py-3 bg-white shadow-sm shrink-0">
+      <img
+        src="https://img.magnific.com/premium-vector/eqh-logo-design-initial-letter-eqh-monogram-logo-using-hexagon-shape_1101554-16445.jpg"
+        alt="Logo Dummy" class="h-10 w-auto object-contain rounded-md">
+      <InputGroup>
+        <AutoComplete />
+        <Button>
+          <Icon icon="material-symbols:search" width="24" height="24" />
+        </Button>
+      </InputGroup>
+      <div class="relative">
+        <Icon icon="material-symbols:shopping-cart" width="32" height="32" />
+        <Badge value="4" severity="danger" class="absolute -top-2 -right-2 text-[9px] min-w-4 h-4 leading-none" />
       </div>
     </header>
 
-    <main class="page-content">
+    <!-- 2. KONTEN UTAMA (Satu-satunya area yang bisa di-scroll) -->
+    <main class="flex-1 overflow-y-auto p-4 relative">
+      <!-- <div
+        class="h-300 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-400 bg-white shadow-sm">
+        (Area Konten - Coba scroll ke bawah)
+      </div> -->
       <RouterView />
     </main>
+    <nav class="bg-white border-t border-gray-100 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] pb-safe">
+      <div class="flex justify-between items-center h-16 px-1">
+        <router-link to="/" v-ripple exact-active-class="!text-blue-500"
+          class="p-ripple relative flex flex-col items-center justify-center w-full h-full rounded-xl text-gray-400 transition-colors">
+          <Icon icon="material-symbols:home" width="24" height="24" />
+          <span class="text-[10px] mt-1 font-medium">Beranda</span>
+        </router-link>
 
-    <nav class="bottom-navigation" aria-label="Navigasi utama">
-      <Button v-for="item in navigationItems" :key="item.label" class="nav-item"
-        :class="{ active: activeNavigation === item.label }" text type="button" @click="navigateTo(item, $event)">
-        <span class="nav-icon">
-          <span aria-hidden="true">{{ item.symbol }}</span>
-          <Badge v-if="item.badge" :value="item.badge" severity="danger" />
-        </span>
-        <span>{{ item.label }}</span>
-      </Button>
+        <router-link to="/kategori" v-ripple exact-active-class="!text-blue-500"
+          class="p-ripple relative flex flex-col items-center justify-center w-full h-full rounded-xl text-gray-400 transition-colors">
+          <Icon icon="material-symbols:category" width="24" height="24" />
+          <span class="text-[10px] mt-1 font-medium">Kategori</span>
+        </router-link>
+
+        <router-link to="/notifikasi" v-ripple exact-active-class="!text-blue-500"
+          class="p-ripple relative flex flex-col items-center justify-center w-full h-full rounded-xl text-gray-400 transition-colors">
+          <div class="relative">
+            <Icon icon="material-symbols:notifications" width="24" height="24" />
+            <Badge value="3" class="absolute -top-2 -right-2 text-[9px] min-w-4 h-4 leading-none" />
+          </div>
+          <span class="text-[10px] mt-1 font-medium">Notifikasi</span>
+        </router-link>
+
+        <router-link to="/profil" v-ripple exact-active-class="!text-blue-500"
+          class="p-ripple relative flex flex-col items-center justify-center w-full h-full rounded-xl text-gray-400 transition-colors">
+          <Icon icon="material-symbols:person" width="24" height="24" />
+          <span class="text-[10px] mt-1 font-medium">Profil</span>
+        </router-link>
+      </div>
     </nav>
-
-    <Menu ref="accountMenu" :model="accountItems" popup />
   </div>
 </template>

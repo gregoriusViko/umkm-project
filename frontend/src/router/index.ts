@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainLayout from '@/layouts/CobaLayout.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
 import { useAuthStore } from '@/modules/auth/stores/authStore'
 
 const router = createRouter({
@@ -23,6 +23,12 @@ const router = createRouter({
     },
 
     {
+      path: '/product/:id',
+      name: 'Product',
+      component: () => import('@/modules/products/pages/ProductDetailPage.vue'),
+    },
+
+    {
       path: '/',
       component: MainLayout,
       meta: { requiresAuth: true },
@@ -32,16 +38,16 @@ const router = createRouter({
           name: 'Home',
           component: () => import('@/modules/products/pages/HomePage.vue'),
         },
-        {
-          path: '/search',
-          name: 'search',
-          component: () => import('@/modules/products/pages/SearchPage.vue'),
-        },
-        {
-          path: '/coba',
-          name: 'coba',
-          component: () => import('@/modules/products/pages/CobaPage.vue'),
-        },
+        // {
+        //   path: '/search',
+        //   name: 'search',
+        //   component: () => import('@/modules/products/pages/SearchPage.vue'),
+        // },
+        // {
+        //   path: '/coba',
+        //   name: 'coba',
+        //   component: () => import('@/modules/products/pages/CobaPage.vue'),
+        // },
       ],
     },
   ],

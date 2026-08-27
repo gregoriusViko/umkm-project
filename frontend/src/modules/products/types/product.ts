@@ -1,13 +1,21 @@
 export interface Product {
+  id: string
   name: string
   price: number
-  oldPrices: number
   discount: number
   shop: string
   city: string
   rating: number
   sold: number
   image: string
+  description: string
+}
+
+export interface Comment {
+  personName: string
+  content: string
+  rate: number
+  date: Date
 }
 
 export interface ProductsRequest {
@@ -18,4 +26,9 @@ export interface ProductsRequest {
 export interface ProductsResponse{
   products: Product[]
   nextCursor: number
+}
+
+export interface ProductResponse{
+  product: Product
+  comments: Comment[]
 }

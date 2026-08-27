@@ -1,10 +1,9 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { productsApi } from '../api/homeApi'
+import { productsApi } from '../api/productsApi'
 import type { ProductsRequest, ProductsResponse } from '../types/product'
 
 export function useProducts() {
-  const router = useRouter()
 
   const loading = ref(false)
   const error = ref<string | null>(null)

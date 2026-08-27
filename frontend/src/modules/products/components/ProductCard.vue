@@ -1,64 +1,37 @@
 <script setup lang="ts">
-import Button from 'primevue/button'
-import Tag from 'primevue/tag'
 import type { Product } from '../types/product'
+import { formatCurrency, formatRating, formatSold } from '../composables/useFormat'
 
-const currencyFormatter = new Intl.NumberFormat('id-ID', {
-  style: 'currency',
-  currency: 'IDR',
-  maximumFractionDigits: 0,
-})
-
-const ratingFormatter = new Intl.NumberFormat('id-ID', {
-  minimumFractionDigits: 1,
-  maximumFractionDigits: 1,
-})
-
-const soldFormatter = new Intl.NumberFormat('id-ID', {
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
-
-const formatCurrency = (value: number) => currencyFormatter.format(value)
-const formatRating = (value: number) => ratingFormatter.format(value)
-const formatSold = (value: number) => `${soldFormatter.format(value)} terjual`
-
-defineProps<Product>()
+defineProps<{
+  product: Product
+}>()
 </script>
 
 <template>
-  <div class="product-image-wrap">
-    <img :src="image" :alt="name" />
+  <router-link :to="`product/${product.id}`">
+    <article
+      class="flex flex-col bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+      <div class="h-48 w-full bg-gray-50 relative">
+        <img :src="product.image" :alt="product.name" class="w-full h-full object-cover" />
+      </div>
 
-    <Tag v-if="discount > 0" class="discount-badge" severity="danger" :value="`-${discount}%`" />
+      <div class="p-4 flex flex-col flex-1 gap-2">
+        <div>
+          <h3 class="font-bold text-gray-800 line-clamp-2">{{ product.name }}</h3>
+          <span class="text-xs text-gray-500">{{ product.shop }}</span>
+        </div>
 
-    <Button
-      class="favorite-button"
-      text
-      rounded
-      type="button"
-      :aria-label="`Simpan ${name}`"
-    >
-      <span aria-hidden="true">♡</span>
-    </Button>
-  </div>
+        <div class="mt-auto pt-2">
+          <span class="text-lg font-bold text-green-600">{{ formatCurrency(product.price) }}</span>
+        </div>
 
-  <div class="product-details">
-    <span class="shop-name">{{ shop }}</span>
-    <h3>{{ name }}</h3>
-    <strong class="product-price">{{ formatCurrency(price) }}</strong>
-
-    <div v-if="oldPrices > 0" class="old-price-row">
-      <del>{{ formatCurrency(oldPrices) }}</del>
-      <span v-if="discount">Hemat {{ discount }}%</span>
-    </div>
-
-    <div class="product-meta">
-      <span class="rating">★ {{ formatRating(rating) }}</span>
-      <span>·</span>
-      <span>{{ formatSold(sold) }}</span>
-    </div>
-
-    <span class="product-city">{{ city }}</span>
-  </div>
+        <div class="flex items-center justify-between text-xs text-gray-500 mt-2">
+          <span class="flex items-center gap-1">
+            ⭐ {{ formatRating(product.rating) }}
+          </span>
+          <span>{{ formatSold(product.sold) }}</span>
+        </div>
+      </div>
+    </article>
+  </router-link>
 </template>

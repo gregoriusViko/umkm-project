@@ -1,0 +1,42 @@
+[
+  {
+    "product_id": "d8c2e9a1-4f3b-4c28-9d6a-8b1c4e7f3a9d",
+    "comments": [
+      {
+        "personName": "Budi Santoso",
+        "date": "2023-10-12",
+        "content": "Barangnya bagus banget, kualitas material oke dan pengiriman super cepat. Terima kasih!",
+        "rate": 5
+      },
+      {
+        "personName": "Siti Aminah",
+        "date": "2023-10-15",
+        "content": "Barang sesuai dengan deskripsi, berfungsi dengan baik, tapi packaging kardusnya sedikit penyok saat sampai.",
+        "rate": 4
+      },
+      {
+        "personName": "Andi Wijaya",
+        "date": "2023-10-18",
+        "content": "Lumayan lah, sesuai dengan harganya. Pengiriman agak lambat.",
+        "rate": 3
+      }
+    ]
+  },
+  {
+    "product_id": "f2a7b3c4-1e5d-4a9b-8c2e-7d6f1a3b5c9e",
+    "comments": [
+      {
+        "personName": "Dewi Lestari",
+        "date": "2023-11-02",
+        "content": "Sangat memuaskan! Next time pasti bakal order lagi di sini. Seller ramah.",
+        "rate": 5
+      },
+      {
+        "personName": "Rizky Pratama",
+        "date": "2023-11-05",
+        "content": "Sayang sekali warna yang dikirim tidak sesuai dengan pesanan.",
+        "rate": 2
+      }
+    ]
+  }
+]

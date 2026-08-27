@@ -1,46 +1,50 @@
 [
   {
+    "id": "d8c2e9a1-4f3b-4c28-9d6a-8b1c4e7f3a9d",
     "name": "Sepatu Sneakers Kanvas Lokal",
     "price": 189000,
-    "oldPrices": 235000,
     "discount": 20,
     "shop": "Langkah Lokal",
     "city": "Bandung",
     "rating": 4.9,
     "sold": 1200,
-    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=640&q=82"
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=640&q=82",
+    "description": "Sepatu sneakers kanvas berkualitas tinggi dengan desain klasik yang tak lekang oleh waktu. Dilengkapi dengan insole yang empuk dan sol karet anti-slip, sangat nyaman digunakan untuk menemani aktivitas harian Anda. Bangga menggunakan produk buatan anak bangsa!"
   },
   {
+    "id": "f2a7b3c4-1e5d-4a9b-8c2e-7d6f1a3b5c9e",
     "name": "Tas Anyaman Rotan Handmade",
     "price": 145000,
-    "oldPrices": 0,
     "discount": 0,
     "shop": "Kriya Nusantara",
     "city": "Bantul",
     "rating": 4.8,
     "sold": 864,
-    "image": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=640&q=82"
+    "image": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=640&q=82",
+    "description": "Tas anyaman rotan eksklusif hasil karya tangan terampil pengrajin lokal Bantul. Memiliki ruang yang cukup luas untuk menyimpan barang bawaan esensial. Sangat cocok dipadukan dengan gaya kasual atau bohemian saat jalan-jalan santai maupun liburan ke pantai."
   },
   {
+    "id": "a1b2c3d4-e5f6-4a1b-9c2d-8e7f1a3b5c9d",
     "name": "Kopi Arabika Gayo 250 gram",
     "price": 68000,
-    "oldPrices": 80000,
     "discount": 15,
     "shop": "Ruang Seduh",
     "city": "Aceh Tengah",
     "rating": 4.9,
     "sold": 2400,
-    "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=640&q=82"
+    "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=640&q=82",
+    "description": "Biji Kopi Arabika Gayo premium yang dipetik langsung dari dataran tinggi Aceh. Menawarkan profil rasa yang seimbang dengan paduan notes fruity, floral, dan sentuhan cokelat. Dipanggang pada level medium roast untuk menjaga karakteristik aslinya. Cocok untuk metode seduh filter maupun espresso."
   },
   {
+    "id": "e9d8c7b6-a5f4-4e3d-2c1b-a9f8e7d6c5b4",
     "name": "Jam Tangan Kayu Pria Wanita",
     "price": 219000,
-    "oldPrices": 0,
     "discount": 0,
     "shop": "KayuKita Studio",
     "city": "Yogyakarta",
     "rating": 4.7,
     "sold": 532,
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=640&q=82"
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=640&q=82",
+    "description": "Jam tangan ramah lingkungan yang terbuat dari limbah kayu premium pilihan. Mengusung desain minimalis dan unisex sehingga cocok digunakan oleh pria maupun wanita. Sangat ringan di pergelangan tangan serta memberikan kesan natural dan elegan pada penampilan Anda."
   }
 ]

@@ -14,6 +14,10 @@
   font-synthesis: none;
 }
 
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
 /* :root {
   color: #17251c;
   background: #f4f5ef;
